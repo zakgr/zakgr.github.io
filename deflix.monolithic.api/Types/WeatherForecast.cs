@@ -1,4 +1,4 @@
-namespace deflix.monolithic.api
+namespace deflix.monolithic.api.Types
 {
     public class WeatherForecast
     {
