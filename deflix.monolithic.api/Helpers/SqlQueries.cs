@@ -57,6 +57,21 @@
             ORDER BY m.UsersRating DESC
             ";
 
+        // Favorites Queries
+        public static string GetFavoritesForUserQuery() =>
+            @"
+            SELECT m.Id AS MovieId, m.Title, m.Description, m.Poster, m.Genre, m.UsersRating, m.PlanType
+            FROM Favorites f
+            JOIN Movies m ON f.MovieId = m.Id
+            WHERE f.UserId = @UserId
+            ";
+
+        public static string InsertFavoriteQuery() =>
+            "INSERT INTO Favorites (UserId, MovieId) VALUES (@UserId, @MovieId)";
+
+        public static string DeleteFavoriteQuery() =>
+            "DELETE FROM Favorites WHERE UserId = @UserId AND MovieId = @MovieId";
+
     }
 
 }
