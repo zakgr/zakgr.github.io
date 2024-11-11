@@ -17,7 +17,7 @@ namespace deflix.monolithic.api.Controllers
             _userService = userService;
         }
 
-        [HttpPost(Name = "SignUp")]
+        [HttpPost("signup", Name = "SignUp")]
         public IActionResult Signup([FromBody] UserRegisterDto userDto)
         {
             if (_userService.Register(userDto))
@@ -27,7 +27,7 @@ namespace deflix.monolithic.api.Controllers
             return BadRequest(new { message = "Registration failed. User already exists." });
         }
 
-        [HttpPost(Name = "SignIn")]
+        [HttpPost("signin", Name = "SignIn")]
         public IActionResult Signin([FromBody] UserLoginDto loginDto)
         {
             var user = _userService.Authenticate(loginDto.Username, loginDto.Password);
