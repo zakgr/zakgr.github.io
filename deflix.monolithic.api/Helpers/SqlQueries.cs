@@ -87,6 +87,30 @@
         public static string DeleteWatchlistItemQuery() =>
             "DELETE FROM Watchlist WHERE UserId = @UserId AND MovieId = @MovieId";
 
+        // Subscriptions Queries
+        public static string GetAllSubscriptionsQuery() =>
+            "SELECT * FROM Subscriptions";
+
+        public static string GetUserSubscriptionQuery() =>
+            @"
+            SELECT s.Id AS SubscriptionId, s.Name, s.Description, s.Price, us.ExpirationDate
+            FROM UserSubscriptions us
+            JOIN Subscriptions s ON us.SubscriptionId = s.Id
+            WHERE us.UserId = @UserId
+            ";
+
+        public static string InsertOrUpdateUserSubscriptionQuery() =>
+            @"
+            MERGE INTO UserSubscriptions AS target
+            USING (SELECT @UserId AS UserId, @SubscriptionId AS SubscriptionId) AS source
+            ON target.UserId = source.UserId
+            WHEN MATCHED THEN
+                UPDATE SET SubscriptionId = source.SubscriptionId, ExpirationDate = @ExpirationDate
+            WHEN NOT MATCHED THEN
+                INSERT (UserId, SubscriptionId, ExpirationDate)
+                VALUES (@UserId, @SubscriptionId, @ExpirationDate);
+            ";
+
     }
 
 }
