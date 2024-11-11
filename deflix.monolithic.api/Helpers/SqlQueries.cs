@@ -72,6 +72,21 @@
         public static string DeleteFavoriteQuery() =>
             "DELETE FROM Favorites WHERE UserId = @UserId AND MovieId = @MovieId";
 
+        // Watchlists Queries
+        public static string GetWatchlistForUserQuery() =>
+            @"
+            SELECT m.Id AS MovieId, m.Title, m.Description, m.Poster, m.Genre, m.UsersRating, m.PlanType
+            FROM Watchlist w
+            JOIN Movies m ON w.MovieId = m.Id
+            WHERE w.UserId = @UserId
+            ";
+
+        public static string InsertWatchlistItemQuery() =>
+            "INSERT INTO Watchlist (UserId, MovieId) VALUES (@UserId, @MovieId)";
+
+        public static string DeleteWatchlistItemQuery() =>
+            "DELETE FROM Watchlist WHERE UserId = @UserId AND MovieId = @MovieId";
+
     }
 
 }
