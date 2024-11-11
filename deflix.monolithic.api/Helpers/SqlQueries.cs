@@ -2,6 +2,7 @@
 {
     public static class SqlQueries
     {
+        // Users Queries
         public static string GetCheckUserExistsQuery() =>
             "SELECT COUNT(*) FROM Users WHERE Username = @Username OR Email = @Email";
 
@@ -23,6 +24,20 @@
 
         public static string GetSessionTokenQuery() =>
             "SELECT * FROM SessionTokens WHERE Token = @Token";
+
+        // Movies Queries
+        public static string GetAllMoviesQuery() =>
+        "SELECT * FROM Movies";
+
+        public static string GetMovieByIdQuery() =>
+            "SELECT * FROM Movies WHERE Id = @Id";
+
+        public static string InsertMovieQuery() =>
+            "INSERT INTO Movies (Title, Description, Poster, Genre, YoutubeKey, UsersRating, UsersComment, CriticsRating, PlanType) " +
+            "VALUES (@Title, @Description, @Poster, @Genre, @YoutubeKey, @UsersRating, @UsersComment, @CriticsRating, @PlanType)";
+
+        public static string GetMoviesByGenreQuery() =>
+            "SELECT * FROM Movies WHERE Genre = @Genre";
     }
 
 }
