@@ -2,10 +2,8 @@
 using deflix.monolithic.api.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
-
 namespace deflix.monolithic.api.Controllers
 {
-
     [ApiController]
     [Route("api/[controller]")]
     public class MoviesController : ApiController

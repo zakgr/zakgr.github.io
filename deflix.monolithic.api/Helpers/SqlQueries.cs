@@ -38,6 +38,25 @@
 
         public static string GetMoviesByGenreQuery() =>
             "SELECT * FROM Movies WHERE Genre = @Genre";
+
+        // Recommendations Queries
+        public static string GetRecommendationsForUserQuery() =>
+            @"
+            SELECT m.Id AS MovieId, m.Title, m.Description, m.Poster, m.Genre, m.UsersRating, m.PlanType,
+                   'Based on your favorites' AS Reason  -- You can modify the reason logic as needed
+            FROM Movies m
+            WHERE m.Genre IN (
+                SELECT DISTINCT Genre
+                FROM Movies
+                JOIN Favorites f ON f.MovieId = Movies.Id
+                WHERE f.UserId = @UserId
+            )
+            AND m.Id NOT IN (
+                SELECT MovieId FROM Favorites WHERE UserId = @UserId
+            )
+            ORDER BY m.UsersRating DESC
+            ";
+
     }
 
 }
